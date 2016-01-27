@@ -1,11 +1,15 @@
 {
-    "name" : "kerisy/framework",
+    "name" : "zhangjf/kerisy-framework",
     "description": "A web framework on the swoole",
     "keywords": ["framework", "swoole", "restful"],
     "authors" : [
         {
             "name" : "Jiaqing Zou",
             "email": "zoujiaqing@gmail.com"
+        },
+        {
+          "name" : "Jeff Zhang",
+          "email": "zelome@163.com"
         }
     ],
     "require": {
