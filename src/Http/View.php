@@ -1,0 +1,59 @@
+<?php
+/**
+ * Kerisy Framework
+ * 
+ * PHP Version 7
+ * 
+ * @author          Jiaqing Zou <zoujiaqing@gmail.com>
+ * @copyright      (c) 2015 putao.com, Inc.
+ * @package         kerisy/framework
+ * @subpackage      Core
+ * @since           2015/11/11
+ * @version         2.0.0
+ */
+
+namespace Kerisy\Http;
+
+use Kerisy\Core\Set;
+use Kerisy\Core\Exception;
+
+class View extends Set
+{
+    protected $_ext = '.php';
+    protected $_template_dir = '';
+    protected $_prefix;
+
+    public function __construct()
+    {
+        $this->_template_dir = APPLICATION_PATH . 'views';
+        parent::__construct();
+    }
+
+    public function setViewPath($path)
+    {
+        $this->_template_dir = APPLICATION_PATH . 'views/' . strtolower($path) . '/';
+        if (!is_dir($this->_template_dir))
+        {
+            throw new Exception('Template directory does not exist: ' . $this->_template_dir);
+        }
+    }
+    
+    public function render($template)
+    {
+        $template_file = $this->_template_dir . $template . $this->_ext;
+        if (!file_exists($template_file))
+        {
+            throw new Exception('Template file does not exist: ' . $template_file);
+        }
+        
+        ob_start();
+
+        ob_implicit_flush(0);
+
+        extract($this->data, EXTR_OVERWRITE);
+
+        include($template_file);
+        
+        return ob_get_clean();
+    }
+}
